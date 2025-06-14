@@ -1,0 +1,11 @@
+//this gives version of proto we are using
+syntax = "proto3";
+
+//this is the namespace equivilant 
+package dummy;
+
+//message is simply a data model 
+message DummyMessage {}
+
+//set of rpc commands we can register in the server & use in the client
+service DummyService{}

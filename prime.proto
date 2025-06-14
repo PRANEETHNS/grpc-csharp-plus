@@ -1,0 +1,17 @@
+//this gives version of proto we are using
+syntax = "proto3";
+
+//this is the namespace equivilant 
+package prime;
+
+message PrimeNumberDecompositionRequest{
+	int32 number = 1;
+}
+
+message PrimeNumberDecompositionResponse{
+	int32 prime_factor = 1;
+}
+
+service PrimeNumberService{
+	rpc PrimeNumberDecomposition (PrimeNumberDecompositionRequest) returns (stream PrimeNumberDecompositionResponse) {};
+}

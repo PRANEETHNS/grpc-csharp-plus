@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "proto", "proto", "{0DB4F876-192E-4494-90BE-C29D6722480F}"
+	ProjectSection(SolutionItems) = preProject
+		dummy.proto = dummy.proto
+		greeting.proto = greeting.proto
+		prime.proto = prime.proto
+		sum.proto = sum.proto
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "client\client.csproj", "{2807034F-EEE4-42D5-9AC9-66283FFF3997}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "server\server.csproj", "{DDB3335E-124F-4C40-A489-66C350A83A3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2807034F-EEE4-42D5-9AC9-66283FFF3997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2807034F-EEE4-42D5-9AC9-66283FFF3997}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2807034F-EEE4-42D5-9AC9-66283FFF3997}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2807034F-EEE4-42D5-9AC9-66283FFF3997}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDB3335E-124F-4C40-A489-66C350A83A3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDB3335E-124F-4C40-A489-66C350A83A3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDB3335E-124F-4C40-A489-66C350A83A3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDB3335E-124F-4C40-A489-66C350A83A3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1D645F46-0112-45D2-8654-A8B6AB0ABCC7}
+	EndGlobalSection
+EndGlobal

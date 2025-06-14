@@ -1,0 +1,23 @@
+//this gives version of proto we are using
+syntax = "proto3";
+
+package sum;
+
+message ValuePackage{
+	int32 value_one = 1;
+	int32 value_two = 2;
+}
+
+message AdditionRequest{
+	ValuePackage valuePackage = 1;
+}
+
+message AdditionResponse{
+	int32 result = 1;
+}
+
+
+service AdditionService{
+	//the paranthesis is to show that we need to define this later in the server
+	rpc Sum(AdditionRequest) returns (AdditionResponse){}
+}
