@@ -25,6 +25,13 @@ message GreetManyTimesResponse{
 	string result = 1;
 }
 //This below section is from streaming
+message LongGreetRequest{
+	Greeting greeting = 1;
+}
+
+message LongGreetResponse{
+	string result = 1;
+}
 
 service GreetingService{
 	//the paranthesis is to show that we need to define this later in the server
@@ -33,4 +40,7 @@ service GreetingService{
 
 	//This is for streaming
 	rpc GreetManyTimes (GreetManyTimesRequest) returns (stream GreetManyTimesResponse){}
+
+	//client streaming
+	rpc LongGreet (stream LongGreetRequest) returns (LongGreetResponse){}
 }

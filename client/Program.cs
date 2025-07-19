@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace client
 {
@@ -66,7 +67,21 @@ namespace client
                 Console.WriteLine(response.ResponseStream.Current.Result);
                 await Task.Delay(200);//This is to slow down process to see in the console
             }
-            
+
+            //This section is for Client Streaming
+            var LongRequest = new LongGreetRequest() { Greeting = greeting };
+            var LongStream = client.LongGreet();
+
+            foreach (var item in Enumerable.Range(1, 20))
+            {
+                await LongStream.RequestStream.WriteAsync(LongRequest);
+            }
+
+            await LongStream.RequestStream.CompleteAsync();
+
+            var LongResponse = await LongStream.ResponseAsync;
+
+            Console.WriteLine(LongResponse.Result);
 
             /************************************************************/
 
@@ -78,9 +93,9 @@ namespace client
                 ValueTwo = 20
             };
 
-            var requestAddition = new AdditionRequest() 
+            var requestAddition = new AdditionRequest()
             {
-                ValuePackage = addition 
+                ValuePackage = addition
             };
 
             var responseAddition = clientAddition.Sum(requestAddition);
@@ -97,11 +112,14 @@ namespace client
 
             var responsePrime = clientPrime.PrimeNumberDecomposition(requestPrime);
 
-            while(await responsePrime.ResponseStream.MoveNext()) 
-            { 
-                Console.WriteLine(responsePrime.ResponseStream.Current.PrimeFactor); 
+            while (await responsePrime.ResponseStream.MoveNext())
+            {
+                Console.WriteLine(responsePrime.ResponseStream.Current.PrimeFactor);
             }
-            //Console.WriteLine(responsePrime.ToString());
+            Console.WriteLine(responsePrime.ToString());
+
+            /************************************************************/
+
 
             channel.ShutdownAsync().Wait();
             Console.ReadKey();
