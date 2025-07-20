@@ -58,34 +58,65 @@ namespace client
 
             //This section is for Server Streaming
             // For server streaming I have made the main method async and added await function where necessary
-            var request = new GreetManyTimesRequest() { Greeting = greeting };
-            var response = client.GreetManyTimes(request);
+            //var request = new GreetManyTimesRequest() { Greeting = greeting };
+            //var response = client.GreetManyTimes(request);
 
-            while (await response.ResponseStream.MoveNext())
-            {
-                //checking the current item in stream and print result
-                Console.WriteLine(response.ResponseStream.Current.Result);
-                await Task.Delay(200);//This is to slow down process to see in the console
-            }
+            //while (await response.ResponseStream.MoveNext())
+            //{
+            //    //checking the current item in stream and print result
+            //    Console.WriteLine(response.ResponseStream.Current.Result);
+            //    await Task.Delay(200);//This is to slow down process to see in the console
+            //}
 
-            //This section is for Client Streaming
-            var LongRequest = new LongGreetRequest() { Greeting = greeting };
-            var LongStream = client.LongGreet();
+            ////This section is for Client Streaming
+            //var LongRequest = new LongGreetRequest() { Greeting = greeting };
+            //var LongStream = client.LongGreet();
 
-            foreach (var item in Enumerable.Range(1, 20))
-            {
-                await LongStream.RequestStream.WriteAsync(LongRequest);
-            }
+            //foreach (var item in Enumerable.Range(1, 20))
+            //{
+            //    await LongStream.RequestStream.WriteAsync(LongRequest);
+            //}
 
-            await LongStream.RequestStream.CompleteAsync();
+            //await LongStream.RequestStream.CompleteAsync();
 
-            var LongResponse = await LongStream.ResponseAsync;
+            //var LongResponse = await LongStream.ResponseAsync;
 
-            Console.WriteLine(LongResponse.Result);
+            //Console.WriteLine(LongResponse.Result);
 
             /************************************************************/
 
+            //This section is for BiDi Streaming
+
+            var stream = client.GreetEveryone();
+
+            var responseReaderTask = Task.Run(async () => {
+                while (await stream.ResponseStream.MoveNext())
+                {
+               
+                    Console.WriteLine("Receieved Cleint: " + stream.ResponseStream.Current.Result);
+                }
+            });
+
+            Greeting[] greetings = {
+                   new Greeting() {FirstName = "John", LastName = "Doe"},
+                   new Greeting() {FirstName = "Maple", LastName = "Berry"},
+                   new Greeting() {FirstName = "Steven", LastName = "Black"}
+            };
+
+            foreach(var greetingItem in greetings)
+            {
+                Console.WriteLine("Sending : " + greetingItem.ToString());
+                await stream.RequestStream.WriteAsync(new GreetEveryoneRequest(){
+                    Greeting = greetingItem
+                });
+
+            }
+
+            await stream.RequestStream.CompleteAsync(); // Tells server request finished
+            await responseReaderTask;
+            /************************************************************/
             var clientAddition = new AdditionService.AdditionServiceClient(channel);
+           
 
             var addition = new ValuePackage()
             {
